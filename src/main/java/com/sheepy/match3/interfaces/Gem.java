@@ -93,6 +93,12 @@ public interface Gem {
      */
     void removeStates(Set<GemState> states);
 
+    /**
+     * Returns a copy of the gem.
+     * @return A copy of this gem.
+     */
+    Gem copy();
+
     // TODO: Figure out if this is needed
     //void remove();
 

@@ -30,8 +30,8 @@ public class BasicGemTest {
         Gem gem = new BasicGem(point, GemType.test);
 
         assertEquals(point, gem.getCoordinates());
-        assertEquals(point.getX(), gem.getX(), .5);
-        assertEquals(point.getY(), gem.getY(), .5);
+        assertEquals((int) point.getX(), gem.getX());
+        assertEquals((int) point.getY(), gem.getY());
     }
 
     @Test

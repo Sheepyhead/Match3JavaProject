@@ -30,6 +30,13 @@ public class BasicGem implements Gem {
         states = new HashSet<GemState>();
     }
 
+    public BasicGem(Point point) {
+        coordinates = point;
+        type = GemType.test;
+
+        states = new HashSet<GemState>();
+    }
+
     @Override
     public int getX() {
         return (int) coordinates.getX();
@@ -93,5 +100,13 @@ public class BasicGem implements Gem {
     @Override
     public void removeStates(Set<GemState> states) {
         this.states.removeAll(states);
+    }
+
+    @Override
+    public Gem copy() {
+        Gem clone = new BasicGem(coordinates, type);
+        clone.setStates(states);
+
+        return clone;
     }
 }
