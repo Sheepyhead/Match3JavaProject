@@ -7,5 +7,5 @@ package com.sheepy.match3.enums; /**
  * An enum representing gem types.
  */
 public enum GemType {
-    test
+    test, nottest
 }

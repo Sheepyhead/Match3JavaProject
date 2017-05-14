@@ -76,7 +76,7 @@ public interface Gem {
     void removeState(GemState state);
 
     /**
-     * Adds multiple states, syntactic sugar for multiple calls to {@link #addState(GemState) addState}.
+     * Adds multiple states, same conditions as {@link #addState(GemState) addState}.
      * @param states The states to add to the gem.
      */
     void addStates(Set<GemState> states);
@@ -88,7 +88,7 @@ public interface Gem {
     void setStates(Set<GemState> states);
 
     /**
-     * Removes multiple states, syntactic sugar for multiple calls to {@link #removeState(GemState) removeState}.
+     * Removes multiple states, same conditions as {@link #removeState(GemState) removeState}.
      * @param states The states to remove from the gem.
      */
     void removeStates(Set<GemState> states);
