@@ -32,6 +32,12 @@ public interface Gem {
     Point getCoordinates();
 
     /**
+     * Changes the gem's coordinates.
+     * @param to The new coordinates for the gem.
+     */
+    void move(Point to);
+
+    /**
      * The type/color of the gem. Must have exactly one type.
      * @return The type of the gem.
      */
