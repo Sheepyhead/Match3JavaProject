@@ -26,7 +26,7 @@ public class BasicGemTest {
 
     @Test
     public void gemHasCoordinates() throws Exception {
-        Point point = new Point(5,5);
+        GemPoint point = new GemPoint(5, 5);
         Gem gem = new BasicGem(point, GemType.test);
 
         assertEquals(point, gem.getCoordinates());
@@ -36,8 +36,8 @@ public class BasicGemTest {
 
     @Test
     public void gemChangesCoordinatesWhenMoved() throws Exception {
-        Point from = new Point(5,5);
-        Point to = new Point(4,4);
+        GemPoint from = new GemPoint(5, 5);
+        GemPoint to = new GemPoint(4, 4);
 
         Gem gem = new BasicGem(from, GemType.test);
 
@@ -49,7 +49,7 @@ public class BasicGemTest {
 
     @Test
     public void gemHasAType() throws Exception {
-        Point point = new Point(0,0);
+        GemPoint point = new GemPoint(0, 0);
         Gem gem = new BasicGem(point, GemType.test);
 
         assertEquals(gem.getType(), GemType.test);
@@ -57,7 +57,7 @@ public class BasicGemTest {
 
     @Test
     public void gemTypeCanBeChanged() throws Exception {
-        Point point = new Point();
+        GemPoint point = new GemPoint();
         Gem gem = new BasicGem(point, GemType.test);
 
         gem.setType(GemType.nottest);
@@ -67,7 +67,7 @@ public class BasicGemTest {
 
     @Test
     public void gemHasNoStates() throws Exception {
-        Point point = new Point(0,0);
+        GemPoint point = new GemPoint(0, 0);
         Gem gem = new BasicGem(point, GemType.test);
 
         assertTrue(gem.getStates().isEmpty());
@@ -75,7 +75,7 @@ public class BasicGemTest {
 
     @Test
     public void gemCanHaveStatesAdded() throws Exception {
-        Point point = new Point();
+        GemPoint point = new GemPoint();
         Gem gem = new BasicGem(point, GemType.test);
 
         gem.addState(GemState.test);
@@ -86,7 +86,7 @@ public class BasicGemTest {
 
     @Test
     public void gemCanHaveStatesRemoved() throws Exception {
-        Point point = new Point();
+        GemPoint point = new GemPoint();
         Gem gem = new BasicGem(point, GemType.test);
 
         gem.addState(GemState.test);
@@ -95,6 +95,24 @@ public class BasicGemTest {
 
         assertFalse(gem.getStates().contains(GemState.test));
         assertFalse(gem.hasState(GemState.test));
+    }
+
+    @Test
+    public void gemLowerOnTheBoardIsSortedLower() throws Exception {
+        GemPoint above = new GemPoint();
+        GemPoint below = new GemPoint(5, 9);
+        GemPoint left = new GemPoint(2, 9);
+        GemPoint right = new GemPoint(9, 9);
+
+        Gem aboveGem = new BasicGem(above);
+        Gem belowGem = new BasicGem(below);
+        Gem leftGem = new BasicGem(left);
+        Gem rightGem = new BasicGem(right);
+
+        assertEquals(-1, belowGem.compareTo(aboveGem));
+        assertEquals(1, aboveGem.compareTo(belowGem));
+        assertEquals(-1, belowGem.compareTo(rightGem));
+        assertEquals(1, belowGem.compareTo(leftGem));
     }
 
 }

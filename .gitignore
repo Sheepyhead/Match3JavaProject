@@ -11,7 +11,6 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-.gradle
 /build/
 
 # Ignore Gradle GUI config
@@ -70,14 +69,4 @@ atlassian-ide-plugin.xml
 # Cursive Clojure plugin
 .idea/replstate.xml
 
-# Crashlytics plugin (for Android Studio and IntelliJ)
-com_crashlytics_export_strings.xml
-crashlytics.properties
-crashlytics-build.properties
-fabric.properties
 .idea/
-build.gradle
-gradle/
-gradlew
-gradlew.bat
-settings.gradle

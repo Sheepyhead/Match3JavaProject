@@ -29,48 +29,64 @@ public class BasicBoardTest {
 
     @Test
     public void boardShouldHaveGems() throws Exception {
+
         assertFalse(board.getGems().isEmpty());
     }
 
     @Test
     public void boardShouldHaveGemsInAllSpots() throws Exception {
-        assertNotNull(board.getGem(new Point(5, 5)));
-        assertNotNull(board.getGem(new Point(7, 6)));
-        assertNotNull(board.getGem(new Point(0, 0)));
+        assertNotNull(board.getGem(new GemPoint(5, 5)));
+        assertNotNull(board.getGem(new GemPoint(7, 6)));
+        assertNotNull(board.getGem(new GemPoint(0, 0)));
     }
 
     @Test
     public void movingGemShouldSwapGems() throws Exception {
-        Point from = new Point(),
-                to = new Point(1, 2);
-        board.getGem(from).setType(GemType.nottest);
+        GemPoint from = new GemPoint(),
+                to = new GemPoint(1, 2);
+
+        GemType fromType = board.getGem(from).getType();
+        GemType toType = board.getGem(to).getType();
 
         board.move(from, to);
 
-        assertEquals(GemType.nottest, board.getGem(to).getType());
-        assertEquals(GemType.test, board.getGem(from).getType());
+        assertEquals(fromType, board.getGem(to).getType());
+        assertEquals(toType, board.getGem(from).getType());
     }
 
     @Test
     public void removingAGemShouldMakeTheGemAboveItDropDownInItsPlace() throws Exception {
-        Point above = new Point(9,8);
-        Point below = new Point(9,9);
+        GemPoint above = new GemPoint(9, 8);
+        GemPoint below = new GemPoint(9, 9);
 
         board.getGem(above).setType(GemType.nottest);
 
         board.removeGem(below);
 
-        assertEquals(board.getGem(below).getType(), GemType.nottest);
+        assertEquals(GemType.nottest, board.getGem(below).getType());
 
     }
 
     @Test
     public void removingAGemShouldPlaceNewGemOnTopRow() throws Exception {
-        Point bottom = new Point(9,9);
-        Point top = new Point(9,0);
+        GemPoint bottom = new GemPoint(9, 9);
+        GemPoint top = new GemPoint(9, 0);
 
         board.removeGem(bottom);
 
         assertNotNull(board.getGem(top));
+    }
+
+    @Test
+    public void boardShouldNotSpawnTestTypes() throws Exception {
+        GemPoint point = new GemPoint();
+        assertNotEquals(board.getGem(point).getType(), GemType.test);
+        assertNotEquals(board.getGem(point).getType(), GemType.nottest);
+    }
+
+    @Test
+    public void puttingThreeGemsInALineShouldRemoveTheGems() {
+        GemPoint point1 = new GemPoint(9,9);
+        GemPoint point2 = new GemPoint(9,8);
     }
 }

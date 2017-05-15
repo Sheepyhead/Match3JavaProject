@@ -7,5 +7,8 @@ package com.sheepy.match3.enums; /**
  * An enum representing gem types.
  */
 public enum GemType {
-    test, nottest
+    // Used for basic unit tests
+    test, nottest,
+    // Used for tests specifically related to type
+    type1, type2, type3, type4, type5
 }
