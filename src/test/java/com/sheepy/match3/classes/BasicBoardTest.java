@@ -85,8 +85,26 @@ public class BasicBoardTest {
     }
 
     @Test
-    public void puttingThreeGemsInALineShouldRemoveTheGems() {
-        GemPoint point1 = new GemPoint(9,9);
-        GemPoint point2 = new GemPoint(9,8);
+    public void puttingThreeGemsInAVerticalLineShouldRemoveTheGems() {
+        GemPoint point1 = new GemPoint(9, 9);
+        GemPoint point2 = new GemPoint(9, 8);
+        GemPoint point3 = new GemPoint(8, 7);
+        GemPoint point4 = new GemPoint(9, 7);
+
+        board.getGem(point1).setType(GemType.test);
+        board.getGem(point2).setType(GemType.test);
+        board.getGem(point3).setType(GemType.test);
+
+
+        board.move(point3, point4);
+
+        assertNotEquals(GemType.test, board.getGem(point1).getType());
+        assertNotEquals(GemType.test, board.getGem(point2).getType());
+        assertNotEquals(GemType.test, board.getGem(point3).getType());
+        assertNotEquals(GemType.test, board.getGem(point4).getType());
+
+        assertNotNull(board.getGem(new GemPoint(9,0)));
+        assertNotNull(board.getGem(new GemPoint(9,1)));
+        assertNotNull(board.getGem(new GemPoint(9,2)));
     }
 }

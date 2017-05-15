@@ -84,7 +84,6 @@ public class BasicBoard implements Board {
         } else {
             gems.remove(from);
         }
-
     }
 
     @Override
