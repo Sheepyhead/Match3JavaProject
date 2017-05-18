@@ -69,6 +69,7 @@ public class BasicBoard implements Board {
 
     @Override
     public void move(GemPoint from, GemPoint to) {
+        System.out.println("[DEBUG] Moving gem at " + from + " to " + to);
         Gem fromGem = gems.get(from).copy();
         Gem toGem = null;
         if (gems.containsKey(to) && gems.get(to) != null) {
@@ -81,9 +82,77 @@ public class BasicBoard implements Board {
         if (toGem != null) {
             gems.put(from, toGem);
             toGem.move(from);
+            checkForLines(from);
         } else {
-            gems.remove(from);
+            gems.put(from,null);
         }
+
+        checkForLines(to);
+    }
+
+    @SuppressWarnings("Duplicates")
+    private void checkForLines(GemPoint point) {
+        if (gems.values().contains(null)) return;
+        System.out.println("[DEBUG] Checking for lines centered on point " + point);
+        SortedSet<GemPoint> verticalPoints = new TreeSet<>();
+        SortedSet<GemPoint> horizontalpoints = new TreeSet<>();
+
+        /**
+         * TODO: check current gem type, if same as previous add to temp list
+         * else save temp list if fewer than 3, or add temp list points to final list if
+         * more than 3 and start temp list over with new gem
+         */
+        SortedSet<Gem> tempSet = new TreeSet<>();
+        System.out.println("[DEBUG] Checking vertical lines");
+        for (int yVar = height - 1; yVar >= 0; yVar--) {
+            GemPoint here = new GemPoint((int) point.getX(), yVar);
+            System.out.println("[DEBUG] Checking point " + here);
+            Gem thisGem = gems.get(here);
+
+            // If there is no prior gem, or the set contains gems of the same type, and it's not the last gem in the line
+            if ((tempSet.isEmpty() || tempSet.first().getType() == thisGem.getType()) && yVar != 0) {
+                // Add the gem to the set
+                if (thisGem != null)
+                    tempSet.add(thisGem);
+            } else {
+                // Check if there are any rows worth scoring
+                if (tempSet.size() >= 3) {
+                    // If there is, add them to the final list of scoring gems
+                    for (Gem gem : tempSet) {
+                        verticalPoints.add(gem.getCoordinates());
+                    }
+                }
+                tempSet.clear();
+            }
+        }
+
+        tempSet.clear();
+
+        System.out.println("[DEBUG] Checking horizontal lines");
+        for (int xVar = width - 1; xVar >= 0; xVar--) {
+            GemPoint here = new GemPoint(xVar, (int) point.getY());
+            System.out.println("[DEBUG] Checking point  " + here);
+            Gem thisGem = gems.get(here);
+            // If there is no prior gem, or the set contains gems of the same type, and it's not the last gem in the line
+            if ((tempSet.isEmpty() || tempSet.first().getType() == thisGem.getType()) && xVar != 0) {
+                // Add the gem to the set
+                tempSet.add(thisGem);
+            } else {
+                // Check if there are any rows worth scoring
+                if (tempSet.size() >= 3) {
+                    // If there is, add them to the final list of scoring gems
+                    for (Gem gem : tempSet) {
+                        horizontalpoints.add(gem.getCoordinates());
+                    }
+                }
+                tempSet.clear();
+            }
+        }
+
+        SortedSet<GemPoint> finalSet = horizontalpoints;
+        finalSet.addAll(verticalPoints);
+
+        removeGems(finalSet);
     }
 
     @Override
@@ -93,25 +162,26 @@ public class BasicBoard implements Board {
 
     @Override
     public void removeGem(GemPoint gemPosition) {
-        SortedSet set = new TreeSet<Point>();
+        SortedSet<GemPoint> set = new TreeSet<GemPoint>();
         set.add(gemPosition);
         removeGems(set);
     }
 
     @Override
     public void removeGems(SortedSet<GemPoint> gemPositions) {
+        System.out.println("[DEBUG] Removing gems at points " + gemPositions);
         SortedSet<Integer> columns = new TreeSet<>();
 
-        for (Point p : gemPositions) {
-            gems.remove(p);
+        for (GemPoint p : gemPositions) {
+            gems.put(p,null);
             columns.add((int) p.getX());
-            System.out.println("Removed from column " + (int) p.getX());
         }
 
         dropGems(columns);
     }
 
     private void dropGems(SortedSet<Integer> columns) {
+        System.out.println("[DEBUG] Dropping gems at colums " + columns);
         for (int x : columns) {
             for (int y = height - 1; y >= 0; y--) {
                 GemPoint here = new GemPoint(x, y);

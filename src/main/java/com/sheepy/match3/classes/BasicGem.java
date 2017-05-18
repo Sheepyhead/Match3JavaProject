@@ -77,6 +77,15 @@ public class BasicGem implements Gem, Comparable<Gem> {
     }
 
     @Override
+    public String toString() {
+        return "BasicGem{" +
+                "coordinates=" + coordinates +
+                ", type=" + type +
+                ", states=" + states +
+                '}';
+    }
+
+    @Override
     public boolean hasState(GemState state) {
         return states.contains(state);
     }
