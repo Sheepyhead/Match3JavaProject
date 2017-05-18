@@ -103,8 +103,31 @@ public class BasicBoardTest {
         assertNotEquals(GemType.test, board.getGem(point3).getType());
         assertNotEquals(GemType.test, board.getGem(point4).getType());
 
-        assertNotNull(board.getGem(new GemPoint(9,0)));
-        assertNotNull(board.getGem(new GemPoint(9,1)));
-        assertNotNull(board.getGem(new GemPoint(9,2)));
+        assertNotNull(board.getGem(new GemPoint(9, 0)));
+        assertNotNull(board.getGem(new GemPoint(9, 1)));
+        assertNotNull(board.getGem(new GemPoint(9, 2)));
+    }
+
+    @Test
+    public void puttingThreeGemsInAHorizontalLineShouldRemoveTheGems() {
+        GemPoint point1 = new GemPoint(9, 9);
+        GemPoint point2 = new GemPoint(8, 9);
+        GemPoint point3 = new GemPoint(7, 8);
+        GemPoint point4 = new GemPoint(7, 9);
+
+        board.getGem(point1).setType(GemType.test);
+        board.getGem(point2).setType(GemType.test);
+        board.getGem(point3).setType(GemType.test);
+
+        board.move(point3, point4);
+
+        assertNotEquals(GemType.test, board.getGem(point1).getType());
+        assertNotEquals(GemType.test, board.getGem(point2).getType());
+        assertNotEquals(GemType.test, board.getGem(point3).getType());
+        assertNotEquals(GemType.test, board.getGem(point4).getType());
+
+        assertNotNull(board.getGem(new GemPoint(9, 0)));
+        assertNotNull(board.getGem(new GemPoint(8, 0)));
+        assertNotNull(board.getGem(new GemPoint(7, 0)));
     }
 }
